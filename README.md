@@ -1,6 +1,6 @@
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg?style=for-the-badge)](https://github.com/custom-components/hacs)
 
-# Screensaver card [WIP]
+# Screensaver card
 This card adds a screensaver to your interface which you can configure globally so the screensaver works global.
 If you only wanna use it on a specific device you can use DeviceIDs from the browser_mod integration to add this functionality.
 
@@ -46,14 +46,28 @@ Under sidebar you can configur the following options
 
 | Name | Type | Default | Supported options | Description |
 | -------------- | ----------- | ------------ | ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `title` | string | optional | `Title` | Title to show in the sidebar |
-| `clock` | boolean | optional | `true` | Show analog clock in sidebar |
 | `digitalClock` | boolean | optional | `true` | Show digital clock in sidebar |
 | `digitalClockWithSeconds` | boolean | optional | `true` | If digitalClock is enabled you can also enable to show seconds |
 | `twelveHourVersion` | boolean | optional | `false` | If digitalClock is enabled you can also enable this to 12 hour version |
 | `date` | boolean | optional | `false` | If date is enabled it will display the current date |
 | `dateFormat` | boolean | string | `DD MMMM` | If date is enabled you define how it should show the date with dateFormat, to see the options check this url: https://momentjs.com/docs/#/parsing/string-format/ |
-| `time` | integer | optional | `10000` | After how much seconds it shows the screensaver (1000 == 1 sec) |
+| `time` | integer | optional | `10` | After how much seconds it shows the screensaver (10 == 10 sec) |
+| `deviceIds` | array | optional | `- a01cc804b906416b9133ea38aa074509` | If you don't want the screensaver on every device you can add a list of deviceIds where it should show the screensaver. (deviceIds are part of browser_mod integration) |
+
+### Full example
+
+```
+screensaver:
+  digitalClock: true
+  digitalClockWithSeconds: false
+  twelveHourVersion: false
+  date: true
+  dateFormat: 'DD MMMM'
+  time: 10
+  deviceIds:
+    - b3104ac6-1d075c0b
+    - bf3aa62a-f1d4bede
+```
 
 
 ### Screenshots

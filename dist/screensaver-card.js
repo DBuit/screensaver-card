@@ -15,6 +15,7 @@ const directives = new WeakMap();
 const isDirective = (o) => {
     return typeof o === 'function' && directives.has(o);
 };
+//# sourceMappingURL=directive.js.map
 
 /**
  * @license
@@ -46,6 +47,7 @@ const removeNodes = (container, start, end = null) => {
         start = n;
     }
 };
+//# sourceMappingURL=dom.js.map
 
 /**
  * @license
@@ -69,6 +71,7 @@ const noChange = {};
  * A sentinel value that signals a NodePart to fully clear its content.
  */
 const nothing = {};
+//# sourceMappingURL=part.js.map
 
 /**
  * @license
@@ -282,6 +285,7 @@ const createMarker = () => document.createComment('');
  *    * (') then any non-(')
  */
 const lastAttributeNameRegex = /([ \x09\x0a\x0c\x0d])([^\0-\x1F\x7F-\x9F "'>=/]+)([ \x09\x0a\x0c\x0d]*=[ \x09\x0a\x0c\x0d]*(?:[^ \x09\x0a\x0c\x0d"'`<>=]*|"[^"]*|'[^']*))$/;
+//# sourceMappingURL=template.js.map
 
 /**
  * @license
@@ -414,6 +418,7 @@ class TemplateInstance {
         return fragment;
     }
 }
+//# sourceMappingURL=template-instance.js.map
 
 /**
  * @license
@@ -502,6 +507,7 @@ class TemplateResult {
         return template;
     }
 }
+//# sourceMappingURL=template-result.js.map
 
 /**
  * @license
@@ -941,6 +947,7 @@ const getOptions = (o) => o &&
     (eventOptionsSupported ?
         { capture: o.capture, passive: o.passive, once: o.once } :
         o.capture);
+//# sourceMappingURL=parts.js.map
 
 /**
  * @license
@@ -992,6 +999,7 @@ class DefaultTemplateProcessor {
     }
 }
 const defaultTemplateProcessor = new DefaultTemplateProcessor();
+//# sourceMappingURL=default-template-processor.js.map
 
 /**
  * @license
@@ -1039,6 +1047,7 @@ function templateFactory(result) {
     return template;
 }
 const templateCaches = new Map();
+//# sourceMappingURL=template-factory.js.map
 
 /**
  * @license
@@ -1079,6 +1088,7 @@ const render = (result, container, options) => {
     part.setValue(result);
     part.commit();
 };
+//# sourceMappingURL=render.js.map
 
 /**
  * @license
@@ -1102,6 +1112,7 @@ const render = (result, container, options) => {
  * render to and update a container.
  */
 const html = (strings, ...values) => new TemplateResult(strings, values, 'html', defaultTemplateProcessor);
+//# sourceMappingURL=lit-html.js.map
 
 /**
  * @license
@@ -1226,6 +1237,7 @@ function insertNodeIntoTemplate(template, node, refNode = null) {
         }
     }
 }
+//# sourceMappingURL=modify-template.js.map
 
 /**
  * @license
@@ -1495,6 +1507,7 @@ const render$1 = (result, container, options) => {
         window.ShadyCSS.styleElement(container.host);
     }
 };
+//# sourceMappingURL=shady-render.js.map
 
 /**
  * @license
@@ -2120,6 +2133,7 @@ _a = finalized;
  * Marks class as having finished creating properties.
  */
 UpdatingElement[_a] = true;
+//# sourceMappingURL=updating-element.js.map
 
 /**
 @license
@@ -2183,6 +2197,7 @@ const css = (strings, ...values) => {
     const cssText = values.reduce((acc, v, idx) => acc + textFromCSSResult(v) + strings[idx + 1], strings[0]);
     return new CSSResult(cssText, constructionToken);
 };
+//# sourceMappingURL=css-tag.js.map
 
 /**
  * @license
@@ -2380,6 +2395,7 @@ LitElement['finalized'] = true;
  * @nocollapse
  */
 LitElement.render = render$1;
+//# sourceMappingURL=lit-element.js.map
 
 function hass() {
   if(document.querySelector('hc-main'))
@@ -2399,6 +2415,21 @@ function provideHass(element) {
 
   return undefined;
 }
+
+function _deviceID() {
+  const ID_STORAGE_KEY = 'lovelace-player-device-id';
+  if(window['fully'] && typeof fully.getDeviceId === "function")
+    return fully.getDeviceId();
+  if(!localStorage[ID_STORAGE_KEY])
+  {
+    const s4 = () => {
+      return Math.floor((1+Math.random())*100000).toString(16).substring(1);
+    };
+    localStorage[ID_STORAGE_KEY] = `${s4()}${s4()}-${s4()}${s4()}`;
+  }
+  return localStorage[ID_STORAGE_KEY];
+}
+let deviceID = _deviceID();
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -17490,17 +17521,19 @@ fecha.parse = function (dateStr, format, i18nSettings) {
   return date;
 };
 
-var a=function(){try{(new Date).toLocaleDateString("i");}catch(e){return "RangeError"===e.name}return !1}()?function(e,t){return e.toLocaleDateString(t,{year:"numeric",month:"long",day:"numeric"})}:function(t){return fecha.format(t,"mediumDate")},n=function(){try{(new Date).toLocaleString("i");}catch(e){return "RangeError"===e.name}return !1}()?function(e,t){return e.toLocaleString(t,{year:"numeric",month:"long",day:"numeric",hour:"numeric",minute:"2-digit"})}:function(t){return fecha.format(t,"haDateTime")},r=function(){try{(new Date).toLocaleTimeString("i");}catch(e){return "RangeError"===e.name}return !1}()?function(e,t){return e.toLocaleTimeString(t,{hour:"numeric",minute:"2-digit"})}:function(t){return fecha.format(t,"shortTime")};var F=function(){var e=document.querySelector("home-assistant");if(e=(e=(e=(e=(e=(e=(e=(e=e&&e.shadowRoot)&&e.querySelector("home-assistant-main"))&&e.shadowRoot)&&e.querySelector("app-drawer-layout partial-panel-resolver"))&&e.shadowRoot||e)&&e.querySelector("ha-panel-lovelace"))&&e.shadowRoot)&&e.querySelector("hui-root")){var t=e.lovelace;return t.current_view=e.___curView,t}return null};
+var a=function(){try{(new Date).toLocaleDateString("i");}catch(e){return "RangeError"===e.name}return !1}()?function(e,t){return e.toLocaleDateString(t,{year:"numeric",month:"long",day:"numeric"})}:function(t){return fecha.format(t,"mediumDate")},n=function(){try{(new Date).toLocaleString("i");}catch(e){return "RangeError"===e.name}return !1}()?function(e,t){return e.toLocaleString(t,{year:"numeric",month:"long",day:"numeric",hour:"numeric",minute:"2-digit"})}:function(t){return fecha.format(t,"haDateTime")},r=function(){try{(new Date).toLocaleTimeString("i");}catch(e){return "RangeError"===e.name}return !1}()?function(e,t){return e.toLocaleTimeString(t,{hour:"numeric",minute:"2-digit"})}:function(t){return fecha.format(t,"shortTime")};var F=function(){var e=document.querySelector("home-assistant");if(e=(e=(e=(e=(e=(e=(e=(e=e&&e.shadowRoot)&&e.querySelector("home-assistant-main"))&&e.shadowRoot)&&e.querySelector("app-drawer-layout partial-panel-resolver"))&&e.shadowRoot||e)&&e.querySelector("ha-panel-lovelace"))&&e.shadowRoot)&&e.querySelector("hui-root")){var t=e.lovelace;return t.current_view=e.___curView,t}return null};//# sourceMappingURL=index.m.js.map
 
 class ScreensaverCard extends LitElement {
     constructor() {
         super();
-        this.clock = false;
         this.digitalClock = false;
         this.twelveHourVersion = false;
         this.digitalClockWithSeconds = false;
         this.date = false;
         this.dateFormat = "DD MMMM";
+        this.screenSaverRunning = false;
+        this.time = 10;
+        this.idleTime = 0;
     }
     static get properties() {
         return {
@@ -17510,27 +17543,15 @@ class ScreensaverCard extends LitElement {
         };
     }
     render() {
-        const title = "title" in this.config ? this.config.title : false;
-        this.clock = this.config.clock ? this.config.clock : false;
         this.digitalClock = this.config.digitalClock ? this.config.digitalClock : false;
         this.digitalClockWithSeconds = this.config.digitalClockWithSeconds ? this.config.digitalClockWithSeconds : false;
         this.twelveHourVersion = this.config.twelveHourVersion ? this.config.twelveHourVersion : false;
         this.date = this.config.date ? this.config.date : false;
         this.dateFormat = this.config.dateFormat ? this.config.dateFormat : "DD MMMM";
+        this.time = 'time' in this.config ? this.config.time : 10;
         return html `
       <div class="screensaver">
-        ${this.digitalClock ? html `<h1 class="digitalClock${title ? ' with-title' : ''}${this.digitalClockWithSeconds ? ' with-seconds' : ''}"></h1>` : html ``}
-        ${this.clock ? html `
-          <div class="clock">
-            <div class="wrap">
-              <span class="hour"></span>
-              <span class="minute"></span>
-              <span class="second"></span>
-              <span class="dot"></span>
-            </div>
-          </div>
-        ` : html ``}
-        ${title ? html `<h1>${title}</h1>` : html ``}
+        ${this.digitalClock ? html `<h1 class="digitalClock${this.digitalClockWithSeconds ? ' with-seconds' : ''}"></h1>` : html ``}
         ${this.date ? html `
           <h2 class="date"></h2>
         ` : html ``}
@@ -17543,14 +17564,6 @@ class ScreensaverCard extends LitElement {
         const hours = ((date.getHours() + 11) % 12 + 1);
         const minutes = date.getMinutes();
         const seconds = date.getSeconds();
-        const hour = Math.floor((hours * 60 + minutes) / 2);
-        const minute = minutes * 6;
-        const second = seconds * 6;
-        if (this.clock) {
-            this.shadowRoot.querySelector('.hour').style.transform = `rotate(${hour}deg)`;
-            this.shadowRoot.querySelector('.minute').style.transform = `rotate(${minute}deg)`;
-            this.shadowRoot.querySelector('.second').style.transform = `rotate(${second}deg)`;
-        }
         if (this.digitalClock && !this.twelveHourVersion) {
             const minutesString = minutes.toString();
             var digitalTime = fullhours.length < 2 ? '0' + fullhours + ':' : fullhours + ':';
@@ -17591,22 +17604,54 @@ class ScreensaverCard extends LitElement {
         this.shadowRoot.querySelector('.date').textContent = date;
     }
     firstUpdated() {
+        this.classList.add('hide');
         provideHass(this);
+        window.setInterval(() => {
+            if (!this.screenSaverRunning) {
+                this.idleTime++;
+                if (this.idleTime >= this.time) {
+                    this.startScreenSaver();
+                }
+            }
+        }, 1000);
+        window.addEventListener('click', e => {
+            this.idleTime = 0;
+            if (this.screenSaverRunning) {
+                e.preventDefault();
+                this.stopScreenSaver();
+            }
+        });
+        window.addEventListener('touchstart', e => {
+            this.idleTime = 0;
+            if (this.screenSaverRunning) {
+                e.preventDefault();
+                this.stopScreenSaver();
+            }
+        });
+    }
+    stopScreenSaver() {
+        clearInterval(this.clockInterval);
+        clearInterval(this.dateInterval);
+        this.screenSaverRunning = false;
+        this.classList.add('hide');
+    }
+    startScreenSaver() {
+        this.screenSaverRunning = true;
         const self = this;
-        if (this.clock || this.digitalClock) {
-            const inc = 1000;
+        if (this.digitalClock) {
             self._runClock();
-            setInterval(function () {
+            self.clockInterval = setInterval(function () {
                 self._runClock();
-            }, inc);
+            }, 1000);
         }
         if (this.date) {
             const inc = 1000 * 60 * 60;
             self._runDate();
-            setInterval(function () {
+            self.dateInterval = setInterval(function () {
                 self._runDate();
             }, inc);
         }
+        this.classList.remove('hide');
     }
     setConfig(config) {
         this.config = config;
@@ -17617,28 +17662,37 @@ class ScreensaverCard extends LitElement {
     static get styles() {
         return css `
         :host {
-          width: 100%;
-          height: 100%;
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          z-index: 9999;
+          right: 0;
           display: flex;
           flex-direction: column;
-          // --face-color: #FFF;
-          // --face-border-color: #FFF;
-          // --clock-hands-color: #000;
-          // --clock-seconds-hand-color: #FF4B3E;
-          // --clock-middle-background: #FFF;
-          // --clock-middle-border: #000;
-          // --sidebar-background: #FFF;
-          // --sidebar-text-color: #000;
-          background-color: var(--sidebar-background, #FFF);
+          background-color: var(--screensaver-background, #000);
+        }
+
+        :host(.hide) {
+          display:none;
+          visibility: hidden;
+        }
+
+        .screensaver {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+          width: 100%;
+          flex-direction: column;
         }
         
         h1 {
-          margin-top:0;
-          margin-bottom: 20px;
+          margin:0;
           font-size: 32px;
           line-height: 32px;
           font-weight: 200;
-          color: var(--sidebar-text-color, #000);
+          color: var(--screensaver-text-color, #FFF);
         }
         h1.digitalClock {
           font-size:60px;
@@ -17648,96 +17702,12 @@ class ScreensaverCard extends LitElement {
           font-size: 48px;
           line-height:48px;
         }
-        h1.digitalClock.with-title {
-          margin-bottom:0;
-        }
         h2 {
-          margin:0;
-          font-size: 26px;
-          line-height: 26px;
+          color: #FFF;
           font-weight: 200;
-          color: var(--sidebar-text-color, #000);
-        }
-
-        .clock {
-          margin:20px 0;
-          position:relative;
-          padding-top: calc(100% - 10px);
-          width: calc(100% - 10px);
-          border-radius: 100%;
-          background: var(--face-color, #FFF);
-          font-family: "Montserrat";
-          border: 5px solid var(--face-border-color, #FFF);
-          box-shadow: inset 2px 3px 8px 0 rgba(0, 0, 0, 0.1);
-        }
-        
-        .clock .wrap {
-          overflow: hidden;
-          position: absolute;
-          top:0;
-          left:0;
-          width: 100%;
-          height: 100%;
-          border-radius: 100%;
-        }
-        
-        .clock .minute,
-        .clock .hour {
-          position: absolute;
-          height: 28%;
-          width: 6px;
-          margin: auto;
-          top: -27%;
-          left: 0;
-          bottom: 0;
-          right: 0;
-          background: var(--clock-hands-color, #000);
-          transform-origin: bottom center;
-          transform: rotate(0deg);
-          box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.4);
-          z-index: 1;
-        }
-        
-        .clock .minute {
-          position: absolute;
-          height: 41%;
-          width: 4px;
-          top: -38%;
-          left: 0;
-          box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.4);
-          transform: rotate(90deg);
-        }
-        
-        .clock .second {
-          position: absolute;
-          top: -48%;
-          height: 48%;
-          width: 2px;
-          margin: auto;
-          left: 0;
-          bottom: 0;
-          right: 0;
-          border-radius: 4px;
-          background: var(--clock-seconds-hand-color, #FF4B3E);
-          transform-origin: bottom center;
-          transform: rotate(180deg);
-          z-index: 1;
-        }
-        
-        .clock .dot {
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          width: 12px;
-          height: 12px;
-          border-radius: 100px;
-          background: var(--clock-middle-background, #FFF);
-          border: 2px solid var(--clock-middle-border, #000);
-          border-radius: 100px;
-          margin: auto;
-          z-index: 1;
+          font-size: 30px;
+          line-height: 30px;
+          margin: 15px 0 0 0;
         }
     `;
     }
@@ -17776,12 +17746,26 @@ async function getConfig() {
 }
 async function addScreensaver() {
     let lovelace = await getConfig();
-    if (lovelace.config.screensaver) {
-        const screensaverConfig = Object.assign({}, lovelace.config.screensaver);
-        let root = getRoot();
-        let appLayout = root.shadowRoot.querySelector('ha-app-layout');
-        let contentContainer = appLayout.shadowRoot.querySelector('#contentContainer');
-        await buildCard(contentContainer, screensaverConfig);
+    if ("screensaver" in lovelace.config) {
+        let addCard = false;
+        if ("deviceIds" in lovelace.config.screensaver) {
+            if (lovelace.config.screensaver.deviceIds.includes(deviceID)) {
+                addCard = true;
+            }
+        }
+        else {
+            addCard = true;
+        }
+        if (addCard) {
+            const screensaverConfig = Object.assign({}, lovelace.config.screensaver);
+            let root = getRoot();
+            let appLayout = root.shadowRoot.querySelector('ha-app-layout');
+            let contentContainer = appLayout.shadowRoot.querySelector('#contentContainer');
+            await buildCard(contentContainer, screensaverConfig);
+        }
+        else {
+            console.log('Screensaver in config, but this device is not in the deviceIds list!');
+        }
     }
     else {
         console.log('No Screensaver in config found!');
