@@ -53,6 +53,7 @@ Under sidebar you can configur the following options
 | `dateFormat` | boolean | string | `DD MMMM` | If date is enabled you define how it should show the date with dateFormat, to see the options check this url: https://momentjs.com/docs/#/parsing/string-format/ |
 | `time` | integer | optional | `10` | After how much seconds it shows the screensaver (10 == 10 sec) |
 | `deviceIds` | array | optional | `- a01cc804b906416b9133ea38aa074509` | If you don't want the screensaver on every device you can add a list of deviceIds where it should show the screensaver. (deviceIds are part of browser_mod integration) |
+| `hideOnPath` | array | optional | `- /lovelace/camera` | If you don't want the screensaver on every path you can add a list of paths where it should hide the screensaver |
 
 ### Full example
 

@@ -2416,20 +2416,36 @@ function provideHass(element) {
   return undefined;
 }
 
+const ID_STORAGE_KEY = 'lovelace-player-device-id';
 function _deviceID() {
-  const ID_STORAGE_KEY = 'lovelace-player-device-id';
-  if(window['fully'] && typeof fully.getDeviceId === "function")
-    return fully.getDeviceId();
   if(!localStorage[ID_STORAGE_KEY])
   {
     const s4 = () => {
       return Math.floor((1+Math.random())*100000).toString(16).substring(1);
     };
-    localStorage[ID_STORAGE_KEY] = `${s4()}${s4()}-${s4()}${s4()}`;
+    if(window['fully'] && typeof fully.getDeviceId === "function")
+      localStorage[ID_STORAGE_KEY] = fully.getDeviceId();
+    else
+      localStorage[ID_STORAGE_KEY] = `${s4()}${s4()}-${s4()}${s4()}`;
   }
   return localStorage[ID_STORAGE_KEY];
 }
 let deviceID = _deviceID();
+
+const setDeviceID = (id) => {
+  if(id === null) return;
+  if(id === "clear") {
+    localStorage.removeItem(ID_STORAGE_KEY);
+  } else {
+    localStorage[ID_STORAGE_KEY] = id;
+  }
+  deviceID = _deviceID();
+};
+
+const params = new URLSearchParams(window.location.search);
+if(params.get('deviceID')) {
+  setDeviceID(params.get('deviceID'));
+}
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -17534,6 +17550,7 @@ class ScreensaverCard extends LitElement {
         this.screenSaverRunning = false;
         this.time = 10;
         this.idleTime = 0;
+        this.tempDisable = false;
     }
     static get properties() {
         return {
@@ -17628,6 +17645,18 @@ class ScreensaverCard extends LitElement {
                 this.stopScreenSaver();
             }
         });
+        if ("hideOnPath" in this.config) {
+            window.addEventListener("location-changed", () => {
+                if (this.config.hideOnPath.includes(window.location.pathname)) {
+                    console.log('Screensaver disable for this path');
+                    this.tempDisable = true;
+                    this.stopScreenSaver();
+                }
+                else {
+                    this.tempDisable = false;
+                }
+            });
+        }
     }
     stopScreenSaver() {
         clearInterval(this.clockInterval);
@@ -17636,22 +17665,27 @@ class ScreensaverCard extends LitElement {
         this.classList.add('hide');
     }
     startScreenSaver() {
-        this.screenSaverRunning = true;
-        const self = this;
-        if (this.digitalClock) {
-            self._runClock();
-            self.clockInterval = setInterval(function () {
+        if (!this.tempDisable) {
+            this.screenSaverRunning = true;
+            const self = this;
+            if (this.digitalClock) {
                 self._runClock();
-            }, 1000);
-        }
-        if (this.date) {
-            const inc = 1000 * 60 * 60;
-            self._runDate();
-            self.dateInterval = setInterval(function () {
+                self.clockInterval = setInterval(function () {
+                    self._runClock();
+                }, 1000);
+            }
+            if (this.date) {
+                const inc = 1000 * 60 * 60;
                 self._runDate();
-            }, inc);
+                self.dateInterval = setInterval(function () {
+                    self._runDate();
+                }, inc);
+            }
+            this.classList.remove('hide');
         }
-        this.classList.remove('hide');
+        else {
+            this.stopScreenSaver();
+        }
     }
     setConfig(config) {
         this.config = config;

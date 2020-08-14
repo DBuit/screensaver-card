@@ -21,6 +21,9 @@ class ScreensaverCard extends LitElement {
   idleTime = 0;
   clockInterval: any;
   dateInterval: any;
+  oldURL: any;
+  currentURL: any;
+  tempDisable = false;
 
   static get properties() {
     return {
@@ -134,6 +137,18 @@ class ScreensaverCard extends LitElement {
         this.stopScreenSaver();
       }
     });
+
+    if("hideOnPath" in this.config) {
+      window.addEventListener("location-changed", () => {
+        if( this.config.hideOnPath.includes(window.location.pathname)) {
+          console.log('Screensaver disable for this path');
+          this.tempDisable = true;
+          this.stopScreenSaver();
+        } else {
+          this.tempDisable = false;
+        }
+      });
+    }
   }
 
   stopScreenSaver() {
@@ -144,24 +159,28 @@ class ScreensaverCard extends LitElement {
   }
 
   startScreenSaver() {
-    this.screenSaverRunning = true;
+    if(!this.tempDisable) {
+      this.screenSaverRunning = true;
 
-    const self = this;
-    if(this.digitalClock) {
-      self._runClock();
-      self.clockInterval = setInterval(function () {
+      const self = this;
+      if(this.digitalClock) {
         self._runClock();
-      }, 1000);
-    }
-    if(this.date) {
-      const inc = 1000 * 60 * 60;
-      self._runDate();
-      self.dateInterval = setInterval(function () {
+        self.clockInterval = setInterval(function () {
+          self._runClock();
+        }, 1000);
+      }
+      if(this.date) {
+        const inc = 1000 * 60 * 60;
         self._runDate();
-      }, inc);
-    }
+        self.dateInterval = setInterval(function () {
+          self._runDate();
+        }, inc);
+      }
 
-    this.classList.remove('hide');
+      this.classList.remove('hide');
+    } else {
+      this.stopScreenSaver();
+    }
   }
 
   setConfig(config) {
